@@ -1,0 +1,24 @@
+#calculator {
+  padding: 1rem;
+  max-width: 30rem;
+  margin: 2rem auto;
+  background: lightsteelblue;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  font-size: 1.5em;
+  width: 28rem;
+}
+
+#setsBtns {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
+  gap: 2.2rem;
+}

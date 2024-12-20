@@ -1,0 +1,8 @@
+<div>
+  @for (symbol of symbols; track symbol) {
+    <button (click)="addSymbol(symbol)">{{ symbol }}</button>
+  }
+  <button (click)="removeSymbol()">ce</button>
+  <button (click)="onCalculate()">=</button>
+</div>
+

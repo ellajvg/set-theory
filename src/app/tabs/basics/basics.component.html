@@ -1,0 +1,19 @@
+<div id="calculator">
+
+  <div id="main">
+    <p>Calculator</p>
+    <input name="formula" [(ngModel)]="formula" (input)="checkAndCorrectInput($event)"/>
+    @if (errorMessage) {
+      <p>{{ errorMessage }}</p>
+    }
+  </div>
+
+  <div id="setsBtns">
+    <app-sets [sets]="sets"></app-sets>
+    <app-buttons [(formula)]="formula" (calculate)="onCalculate()"></app-buttons>
+  </div>
+
+</div>
+
+<app-steps [steps]="steps"></app-steps>
+

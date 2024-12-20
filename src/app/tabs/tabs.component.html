@@ -1,0 +1,8 @@
+<button (click)="showSelectedTab('basics')">Set operations calculator</button>
+<button (click)="showSelectedTab('binary')">Binary relations</button>
+
+@if (selectedTab === "basics") {
+  <app-basics/>
+} @else if (selectedTab === "binary") {
+  <app-binary/>
+}

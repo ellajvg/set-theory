@@ -1,0 +1,13 @@
+<div>
+  <form>
+    @for (set of sets.slice(0, 3); track set.name) {
+      <div>
+        <span>{{ "Set " + set.name + " = {" }}</span>
+        <input [name]="set.name" [(ngModel)]="set.setContent"/>
+        <span>&#125;</span>
+      </div>
+    }
+  </form>
+
+  <p>Separate set members by a comma. Whitespaces will be ignored.</p>
+</div>

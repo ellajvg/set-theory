@@ -1,0 +1,10 @@
+<ol>
+  @for (step of steps; track step.id) {
+    @if (step.header) {
+      <p class="step-header">{{ step.step }}</p>
+    } @else {
+      <li>{{ step.step }}</li>
+    }
+  }
+</ol>
+
