@@ -1,5 +1,5 @@
-import {Component, input, model, output, signal, ViewChild} from '@angular/core';
-import {TableElement} from '../table-element.model';
+import {Component, input, model, signal} from '@angular/core';
+import {TableElement} from './table-element.model';
 import {DivComponent} from '../../../shared/div/div.component';
 import {PropertiesComponent} from './properties/properties.component';
 
@@ -18,7 +18,6 @@ export class TableComponent {
   tableData = model.required<TableElement[][]>();
   product = input.required<string[]>();
   onSetRelation = input.required<boolean>();
-  @ViewChild(PropertiesComponent) propertiesComponent!: PropertiesComponent;
 
   onCheckboxChange($event: Event) {
     const checkbox = $event.target as HTMLInputElement;
@@ -37,7 +36,5 @@ export class TableComponent {
         }
       }
     }
-
-    this.propertiesComponent.updateSetProperties();
   }
 }

@@ -1,7 +1,8 @@
 import {Component, signal} from '@angular/core';
-import {TableComponent} from './table/table.component';
 import {FormsModule} from '@angular/forms';
-import {TableElement} from './table-element.model';
+
+import {TableComponent} from './table/table.component';
+import {TableElement} from './table/table-element.model';
 import {DivComponent} from '../../shared/div/div.component';
 
 @Component({
@@ -118,6 +119,7 @@ export class BinaryComponent {
       }
       tableData.push(row);
     }
+
     return tableData;
   }
 }

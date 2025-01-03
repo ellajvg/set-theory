@@ -65,7 +65,7 @@
       <div class="property">
         <p class="header">INTRANSITIVITY</p>
         <span class="propertyDesc">This binary relation
-          @if (properties()[5]) {IS}
+          @if (properties()[6]) {IS}
           @else {IS NOT}
           intransitive. R is intransitive iff, for each x, y, z ∈ X,
        if xRy and yRz, then it is not the case that xRz.
@@ -74,7 +74,7 @@
       <div class="property">
         <p class="header">STRICT ORDER</p>
         <span class="propertyDesc">This binary relation
-          @if (properties()[5]) {IS}
+          @if (properties()[7]) {IS}
           @else {IS NOT}
           a strict order. R is a strict order on X iff R
        is both asymmetric and transitive on X.
@@ -83,7 +83,7 @@
       <div class="property">
         <p class="header">PARTIAL ORDER</p>
         <span class="propertyDesc">This binary relation
-          @if (properties()[5]) {IS}
+          @if (properties()[8]) {IS}
           @else {IS NOT}
           a partial order. R is a partial order on X iff R
        is reflexive, antisymmetric, and transitive on X.
@@ -104,7 +104,7 @@
       <div class="property">
         <p class="header">RIGHT TOTALITY</p>
         <span class="propertyDesc">This binary relation
-          @if (properties()[0]) {IS}
+          @if (properties()[1]) {IS}
           @else {IS NOT}
           right total. R is right total iff, for each y ∈ Y,
           there is a x ∈ X, such that xRy.
@@ -114,7 +114,7 @@
       <div class="property">
         <p class="header">LEFT MONOGAMY</p>
         <span class="propertyDesc">This binary relation
-          @if (properties()[0]) {IS}
+          @if (properties()[2]) {IS}
           @else {IS NOT}
           left monogamous. R is left monogamous iff,
           for each x ∈ X and each y, z ∈ Y, if xRy and xRy, then y = z.
@@ -124,7 +124,7 @@
       <div class="property">
         <p class="header">RIGHT MONOGAMY</p>
         <span class="propertyDesc">This binary relation
-          @if (properties()[0]) {IS}
+          @if (properties()[3]) {IS}
           @else {IS NOT}
           right monogamous. R is right monogamous iff,
           for each x, z ∈ X and each y ∈ Y, if xRy and zRy, then x = z.

@@ -1,5 +1,5 @@
-import {Component, effect, input, Input, OnChanges, signal, SimpleChanges} from '@angular/core';
-import {TableElement} from '../../table-element.model';
+import {Component, effect, input, signal} from '@angular/core';
+import {TableElement} from '../table-element.model';
 
 @Component({
   selector: 'app-properties',
@@ -15,12 +15,16 @@ export class PropertiesComponent {
   product = input.required<string[]>();
   onSetRelation = input.required<boolean>();
 
-  updateSetProperties() {
-    if (this.onSetRelation()) {
-      this.updateOnSetProperties()
-    } else {
-      this.updateToSetProperties()
-    }
+  constructor() {
+    effect(() => {
+      if (this.tableData().length > 0) {
+        if (this.onSetRelation()) {
+          this.updateOnSetProperties()
+        } else {
+          this.updateToSetProperties()
+        }
+      }
+    });
   }
 
   updateOnSetProperties() {
@@ -172,7 +176,6 @@ export class PropertiesComponent {
 
     let rightMono = true;
     for (let i =  1; i < this.tableData()[0].length; i++) {
-      let found = false;
       let plus = 0;
       for (let j = 1; j < this.tableData().length; j++) {
         if (this.tableData()[j][i].content === '+') {
