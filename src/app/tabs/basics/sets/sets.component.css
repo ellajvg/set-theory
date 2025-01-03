@@ -1,12 +1,21 @@
 div {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  max-width: 15rem;
+  margin-bottom: 0.7em;
+}
+
+#set {
+  font-variant: small-caps;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid gray;
 }
 
 p {
-  font-size: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
-div {
-  max-width: 15rem;
-}
 

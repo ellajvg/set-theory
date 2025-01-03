@@ -1,0 +1,60 @@
+#relationResults {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#checkboxes {
+  display: flex;
+  max-width: 28rem;
+  margin-top: 0.5rem;
+  overflow: scroll;
+  gap: 0.8rem;
+}
+
+#checkbox {
+  display: flex;
+  align-items: center;
+  min-width: fit-content;
+  gap: 0.2rem;
+}
+
+input[type=checkbox] {
+  appearance: none;
+  border-radius: 0.1rem;
+  background-color: white;
+  cursor: pointer;
+  width: 0.6rem;
+  height: 0.6rem;
+  outline: 0.9px solid gray;
+}
+
+input[type="checkbox"]:checked {
+  background: linear-gradient(180deg, gray, black);
+}
+
+#tableContainer {
+  max-width: 28rem;
+  max-height: 20rem;
+  overflow: scroll;
+}
+
+table, td {
+  border: 1px solid gray;
+  border-collapse: collapse;
+  padding: 0.5rem 1rem;
+}
+
+table {
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.table-head {
+  font-weight: bold;
+}
+
+
+

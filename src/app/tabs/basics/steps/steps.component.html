@@ -1,10 +1,17 @@
-<ol>
-  @for (step of steps; track step.id) {
-    @if (step.header) {
+<div id="steps">
+  <p id="title">STEPS</p>
+  @for (step of steps(); track step.id) {
+    @if (step.class === 'header') {
       <p class="step-header">{{ step.step }}</p>
+    } @else if (step.class === 'result') {
+      <p class="step-result">{{ step.step }}</p>
     } @else {
-      <li>{{ step.step }}</li>
+      <p class="step-regular">{{ step.id + '. ' + step.step }}</p>
     }
   }
-</ol>
-
+  <p class="instructions">Plug n' chug! Expressions in parentheses are calculated first,
+    then expressions with unary operators, then the rest from left to right.
+    Please note that while intersection and union are commutative operations,
+    difference and cartesian product are not, so add parentheses if needed.
+  </p>
+</div>

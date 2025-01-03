@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {Step} from './step.model';
 
 @Component({
@@ -9,5 +9,5 @@ import {Step} from './step.model';
   styleUrl: './steps.component.css'
 })
 export class StepsComponent {
-  @Input() steps!: Step[];
+  steps = input.required<Step[]>();
 }

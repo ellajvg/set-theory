@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Set} from './set.model';
 
@@ -13,5 +13,5 @@ import {Set} from './set.model';
   styleUrl: './sets.component.css'
 })
 export class SetsComponent {
-  @Input() sets!: Set[];
+  sets= input.required<Set[]>();
 }

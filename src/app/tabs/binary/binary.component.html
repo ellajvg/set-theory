@@ -1,1 +1,27 @@
-<p>binary works!</p>
+<app-div>
+  <p id="title">{{ title() }}</p>
+  <p class="instructions binIns">Separate set members by a comma. Whitespaces will be ignored.</p>
+  <div id="input">
+    <div class="set-entry">
+      <span>SET 1 = &#123;</span>
+      <input name="set1" [(ngModel)]="set1"/>
+      <span>&#125;</span>
+    </div>
+    @if (selected() === 'toSet') {
+      <div class="set-entry">
+        <span>SET 2 = &#123;</span>
+        <input name="set2" [(ngModel)]="set2"/>
+        <span>&#125;</span>
+      </div>
+    }
+  </div>
+  <p class="instructions">{{ errorMessage() }}</p>
+
+  <div id="binaryBtns">
+    <button (click)="changeSelected()">{{ buttonText() }}</button>
+    <button id="getRelationBtn" (click)="getBinaryRelation()">GET BINARY RELATION</button>
+  </div>
+</app-div>
+
+<app-table [onSetRelation]="selected() === 'onSet'" [product]="product()" [tableData]="tableData()"></app-table>
+

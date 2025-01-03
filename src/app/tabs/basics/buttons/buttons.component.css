@@ -1,10 +1,37 @@
-div {
+#main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.2rem;
+  gap: 0.4rem;
   min-width: 11rem;
+  min-height: 6rem;
+}
+
+#lastRow {
+  margin-top: 0.4rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0.4rem;
+  min-width: 11rem;
+  min-height: 1rem;
 }
 
 button {
   font-size: 1rem;
+  border-radius: 0.2rem;
+  background: linear-gradient(180deg, white, #eee);
+  border: none;
+  box-shadow: 1px 2px 3px gray;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  font-family: Roboto, sans-serif;
+}
+
+button:hover {
+  transform: translateY(2px);
+  box-shadow: 1px 2px 1px gray;
+}
+
+#calculateBtn {
+  background: linear-gradient(180deg, gray, black);
+  color: white;
 }

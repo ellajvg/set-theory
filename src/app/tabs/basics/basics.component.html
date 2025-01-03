@@ -1,19 +1,17 @@
-<div id="calculator">
-
-  <div id="main">
-    <p>Calculator</p>
+<app-div>
+  <div>
+    <p id="title">SET THEORY CALCULATOR</p>
     <input name="formula" [(ngModel)]="formula" (input)="checkAndCorrectInput($event)"/>
-    @if (errorMessage) {
-      <p>{{ errorMessage }}</p>
+    @if (errorMessage()) {
+      <p class="instructions">{{ errorMessage() }}</p>
     }
   </div>
 
   <div id="setsBtns">
-    <app-sets [sets]="sets"></app-sets>
+    <app-sets [sets]="sets()"></app-sets>
     <app-buttons [(formula)]="formula" (calculate)="onCalculate()"></app-buttons>
   </div>
+</app-div>
 
-</div>
-
-<app-steps [steps]="steps"></app-steps>
+<app-steps [steps]="steps()"></app-steps>
 

@@ -1,5 +1,28 @@
-ol p {
-  text-indent: -1.1em;
-  margin-top: 0.3em;
-  margin-bottom: 0.3em;
+#steps {
+  padding: 1rem 2rem;
+  max-width:28rem;
+  margin: 2rem auto;
+  border-radius: 0.4rem;
+  box-shadow: 0 1px 6px gray;
+  background-color: white;
 }
+
+#header {
+  text-align: center;
+}
+
+#title {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.step-result {
+  box-shadow: 0 2px 3px gray;
+  padding: 0.5rem;
+  background: linear-gradient(180deg, gray, black);
+  color: white;
+  border-radius: 0.2rem;
+  font-size: 0.95rem;
+}
+
+

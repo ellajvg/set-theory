@@ -1,1 +1,52 @@
-<p>table works!</p>
+<app-div>
+  <p id="title">BINARY RELATION PROPERTIES</p>
+  @if (tableData().length !== 0) {
+    <div id="relationResults">
+      <div id="checkboxes">
+        @for (element of product(); track element) {
+          <div id="checkbox">
+            <input
+              type="checkbox"
+              [id]="element"
+              [checked]="true"
+              (change)="onCheckboxChange($event)"
+            />
+            <label>{{ element }}</label>
+          </div>
+        }
+      </div>
+
+      <div id="tableContainer">
+        <table>
+          <tbody>
+            @for (row of tableData(); track row) {
+              <tr>
+                @for (element of row; track element.id) {
+                  @if (element.id.includes('⟨')) {
+                    <td>{{ element.content }}</td>
+                  } @else {
+                    <td class="table-head">{{ element.content }}</td>
+                  }
+
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  <p class="instructions">
+    Once you submit a set or two, click on the checkboxes to add or
+    remove ordered pairs from the binary relation. Watch how this affects
+    the properties of the relation!
+  </p>
+
+  <app-properties
+    [tableData]="tableData()"
+    [excluded]="excluded()"
+    [product]="product()"
+    [onSetRelation]="onSetRelation()">
+  </app-properties>
+</app-div>

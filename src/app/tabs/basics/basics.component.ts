@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {ButtonsComponent} from './buttons/buttons.component';
@@ -7,26 +7,28 @@ import {StepsComponent} from './steps/steps.component';
 
 import {type Set} from './sets/set.model';
 import {type Step} from './steps/step.model';
+import {DivComponent} from '../../shared/div/div.component';
 
 @Component({
   selector: 'app-basics',
-  imports: [FormsModule, StepsComponent, SetsComponent, ButtonsComponent],
+  imports: [FormsModule, StepsComponent, SetsComponent, ButtonsComponent, DivComponent],
   templateUrl: './basics.component.html',
   standalone: true,
   styleUrl: './basics.component.css'
 })
 export class BasicsComponent {
-  formula?: string;
-  errorMessage: string | null = null;
-  sets: Set[] = [
+  formula = signal<string | ''>('');
+  errorMessage = signal<string | ''> ('');
+  sets=  signal<Set[]>([
     { name: 'A', setContent: [] },
     { name: 'B', setContent: [] },
     { name: 'C', setContent: [] },
     { name: '∅', setContent: [] }
-  ];
-  steps: Step[] = [];
+  ]);
+  steps = signal<Step[]>([]);
 
   checkAndCorrectInput(inputEvent: Event): void {
+    console.log('hi1');
     const fullInput = inputEvent.target as HTMLInputElement;
     const validInputs = /^[A-Ca-c0∅()pP'~&*iI⋂|+⋃Uuv×\-–]*$/;
     let correctedInput = '';
@@ -35,7 +37,7 @@ export class BasicsComponent {
     for (let i = 0; i < fullInput.value.length; i++) {
       let char = fullInput.value.charAt(i);
       if (!validInputs.test(char)) {
-        this.errorMessage = `${char} is not a valid character.`;
+        this.errorMessage.set(`${char} is not a valid character.`);
         errorFound = true;
         continue;
       }
@@ -60,17 +62,18 @@ export class BasicsComponent {
     }
 
     if (!errorFound) {
-      this.errorMessage = null;
+      this.errorMessage.set('');
     }
 
     fullInput.value = correctedInput;
-    this.formula = correctedInput;
+    this.formula.set(correctedInput);
   }
 
   hasValidSyntax(formula: string | undefined): boolean {
+    console.log('hi2');
     //first check: no formula entered or single
     if (!formula) {
-      this.errorMessage = 'Please enter a formula.'
+      this.errorMessage.set('Please enter a formula.');
       return false;
     }
 
@@ -81,13 +84,13 @@ export class BasicsComponent {
         stack.push(char);
       } else if (char === ')') {
         if (stack.pop() !== '(') {
-          this.errorMessage = 'Fix unbalanced parentheses.'
+          this.errorMessage.set('Fix unbalanced parentheses.');
           return false;
         }
       }
     }
     if (stack.length > 0) {
-      this.errorMessage = 'Fix unbalanced parentheses.'
+      this.errorMessage.set('Fix unbalanced parentheses.');
       return false;
     }
 
@@ -97,11 +100,11 @@ export class BasicsComponent {
     const binaryOperations = /^[⋂⋃–×]*$/;
 
     if (formula.length === 1 && !sets.test(formula.charAt(0))) {
-      this.errorMessage = `${formula.charAt(0)} is not a valid formula.`;
+      this.errorMessage.set(`${formula.charAt(0)} is not a valid formula.`);
       return false;
     } else if (formula.length === 2 && !(unaryOperations.test(formula.charAt(0))
       && sets.test(formula.charAt(1)))) {
-      this.errorMessage = `${formula.charAt(0) + formula.charAt(1)} is not a valid sequence.`;
+      this.errorMessage.set(`${formula.charAt(0) + formula.charAt(1)} is not a valid sequence.`);
       return false;
     } else {
       let prev = formula.charAt(2);
@@ -109,30 +112,30 @@ export class BasicsComponent {
       for (let i = 3; i < formula.length; i++) {
         if (sets.test(formula.charAt(i)) &&
           (sets.test(prev) || prev === ')')) {
-          this.errorMessage = `${prev + formula.charAt(i)} is not a valid sequence.`;
+          this.errorMessage.set(`${prev + formula.charAt(i)} is not a valid sequence.`);
           return false;
         } else if (unaryOperations.test(formula.charAt(i)) &&
           (!binaryOperations.test(prev) && !unaryOperations.test(prev)) ) {
-          this.errorMessage = `${prev + formula.charAt(i)} is not a valid sequence.`;
+          this.errorMessage.set(`${prev + formula.charAt(i)} is not a valid sequence.`);
           return false;
         } else if (binaryOperations.test(formula.charAt(i)) &&
           (!sets.test(prev) && !(prev === ')'))) {
-          this.errorMessage = `${prev + formula.charAt(i)} is not a valid sequence.`;
+          this.errorMessage.set(`${prev + formula.charAt(i)} is not a valid sequence.`);
           return false;
         } else if (formula.charAt(i) === '(' &&
           (prev === ')' || sets.test(prev) )) {
-          this.errorMessage = `${prev + formula.charAt(i)} is not a valid sequence.`;
+          this.errorMessage.set(`${prev + formula.charAt(i)} is not a valid sequence.`);
           return false;
         } else if (formula.charAt(i) === ')' &&
           (prev === '(' || (!(prev === ')') && !sets.test(prev)))) {
-          this.errorMessage = `${prev + formula.charAt(i)} is not a valid sequence.`;
+          this.errorMessage.set(`${prev + formula.charAt(i)} is not a valid sequence.`);
           return false;
         }
         prev = formula.charAt(i);
       }
 
       if (!sets.test(prev) && prev !== ')') {
-        this.errorMessage = `${prev} is missing an argument.`;
+        this.errorMessage.set(`${prev} is missing an argument.`);
         return false;
       }
     }
@@ -140,7 +143,8 @@ export class BasicsComponent {
   }
 
   turnSetInputsToArrays(): void {
-    for (const set of this.sets) {
+    console.log('hi3');
+    for (const set of this.sets()) {
       let content = set.setContent;
 
       content = [...new Set(
@@ -155,18 +159,19 @@ export class BasicsComponent {
   }
 
   onCalculate(): void {
-    this.sets = this.sets.slice(0,4); //reset to array containing A-C
-    this.steps = [];
-    if (this.hasValidSyntax(this.formula)) {
+    console.log('hi4');
+    this.sets.set(this.sets().slice(0,4)); //reset to array containing A-C
+    this.steps.set([]);
+    if (this.hasValidSyntax(this.formula())) {
       this.turnSetInputsToArrays();
-      let formulaArray = this.formula!.split('').filter(char => char !== ' ');
+      let formulaArray = this.formula()!.split('').filter(char => char !== ' ');
       let parentheses = false;
-      if (this.formula!.includes('(')) {
+      if (this.formula()!.includes('(')) {
         parentheses = true;
-        this.steps.push({
-          id: this.steps.length,
+        this.steps().push({
+          id: this.steps().length,
           step: 'Calculate expressions within parentheses in: ' + formulaArray.join(''),
-          header: true
+          class: 'header'
         });
         formulaArray = this.removeParentheses(formulaArray);
       }
@@ -177,22 +182,23 @@ export class BasicsComponent {
         } else {
           step = 'Calculate expressions in: ';
         }
-        this.steps.push({
-          id: this.steps.length,
+        this.steps().push({
+          id: this.steps().length,
           step: step + formulaArray.join(''),
-          header: true
+          class: 'header'
         });
       }
       const result = this.calculate(formulaArray);
-      this.steps.push({
-        id: this.steps.length,
+      this.steps().push({
+        id: this.steps().length,
         step: 'The resulting set is: ' + result.join(''),
-        header: true
+        class: 'result'
       });
     }
   }
 
   removeParentheses(formula: string[]):string[] {
+    console.log('hi5');
     if (!formula.includes('(')) {
       return this.calculate(formula);
     }
@@ -222,6 +228,7 @@ export class BasicsComponent {
   }
 
   calculate(formula: string[]):string[] {
+    console.log('hi6');
     const unaryOperations = /^['P]*$/
     for (let i = 0; i < formula.length; i++) {
       if (unaryOperations.test(formula[i])) {
@@ -237,11 +244,11 @@ export class BasicsComponent {
         }
       }
 
-      let set1 = this.sets
+      let set1 = this.sets()
         .find(set => set.name === formula[0])!.setContent as string[];
 
       while (formula.length > 1) {
-        const set2 = this.sets
+        const set2 = this.sets()
           .find(set => set.name === formula[2])!.setContent as string[];
         if (formula[1] === '⋂') {
           set1 = this.intersection(set1, set2);
@@ -257,9 +264,9 @@ export class BasicsComponent {
         const start = formula.slice(0, 3);
         const end = formula.slice(3);
 
-        this.sets.push({name: newName, setContent: set1});
-        this.steps.push({
-          id: this.steps.length,
+        this.sets().push({name: newName, setContent: set1});
+        this.steps().push({
+          id: this.steps().length,
           step: start.join('') + " = " + newName
         });
         formula = [newName, ...end];
@@ -268,24 +275,25 @@ export class BasicsComponent {
   }
 
   unaryOperationHelper(formula: string[]):string[] {
+    console.log('hi7');
     if (!formula.includes('P') || formula.length === 2) {
-      let set = this.sets
+      let set = this.sets()
         .find(set => set.name === formula[formula.length-1])!.setContent as string[];
       if (!formula.includes('P')) {
         if ((formula.length-1)%2 !== 0) {
           const newSet = this.complement(set);
           const newName = '{' + newSet.join(', ') + '}';
-          this.sets.push({name: newName, setContent: newSet});
+          this.sets().push({name: newName, setContent: newSet});
 
-          this.steps.push({
-            id: this.steps.length,
+          this.steps().push({
+            id: this.steps().length,
             step: formula.join('') + " = " + newName
           });
 
           return [newName];
         } else {
-          this.steps.push({
-            id: this.steps.length,
+          this.steps().push({
+            id: this.steps().length,
             step: formula.join('') + " = " + formula[formula.length-1]
           });
           return [formula[formula.length-1]];
@@ -293,10 +301,10 @@ export class BasicsComponent {
       } else {
         const newSet = this.powerSet(set);
         const newName = '{' + newSet.join(', ') + '}';
-        this.sets.push({name: newName, setContent: newSet});
+        this.sets().push({name: newName, setContent: newSet});
 
-        this.steps.push({
-          id: this.steps.length,
+        this.steps().push({
+          id: this.steps().length,
           step: formula.join('') + " = " + newName
         });
 
@@ -321,6 +329,7 @@ export class BasicsComponent {
   }
 
   powerSet(set: string[]) {
+    console.log('hi8');
     set = [...new Set([...set])];
     const powerSet: string[] = [];
     const powerSetSize = Math.pow(2, set.length);
@@ -339,15 +348,17 @@ export class BasicsComponent {
   }
 
   complement(set: string[]): string[] {
+    console.log('hi9');
     const universe = [...new Set([
-      ...this.sets[0].setContent,
-      ...this.sets[1].setContent,
-      ...this.sets[2].setContent
+      ...this.sets()[0].setContent,
+      ...this.sets()[1].setContent,
+      ...this.sets()[2].setContent
     ])];
     return universe.filter(element => !set.includes(element));
   }
 
   union(set1: string[], set2: string[]): string[] {
+    console.log('hi10');
     return [...new Set([
       ...set1,
       ...set2,
@@ -355,14 +366,17 @@ export class BasicsComponent {
   }
 
   intersection(set1: string[], set2: string[]): string[] {
+    console.log('hi11');
     return set1.filter(item => set2.includes(item));
   }
 
   difference(set1: string[], set2: string[]): string[] {
+    console.log('hi12');
     return set1.filter(item => !set2.includes(item));
   }
 
   cartesianProduct(set1: string[], set2: string[]):string[] {
+    console.log('hi13');
     const product: string[] = [];
     for (let i = 0; i < set1.length; i++) {
       for (let j = 0; j < set2.length; j++) {

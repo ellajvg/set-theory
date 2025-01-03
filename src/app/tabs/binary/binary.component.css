@@ -1,0 +1,61 @@
+app-div {
+  margin-top: 4rem;
+}
+
+.instructions {
+  margin-bottom: 1.3rem;
+}
+
+.binIns {
+  margin-top: 0;
+  margin-bottom: 1.8rem;
+}
+
+button {
+  font-size: 0.9rem;
+  border-radius: 0.2rem;
+  background: linear-gradient(180deg, white, #eee);
+  border: none;
+  box-shadow: 1px 2px 3px gray;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  font-family: Roboto, sans-serif;
+  min-height: 1.5rem;
+}
+
+button:hover {
+  transform: translateY(2px);
+  box-shadow: 1px 2px 1px gray;
+}
+
+#binaryBtns {
+  margin-left: 0.7rem;
+  margin-right: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+input {
+  margin: 0 auto;
+  font-size: 1.1rem;
+  min-width: 23rem;
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+#input {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.set-entry {
+  font-size: 1.1rem;
+  margin-left: 0.8rem;
+
+}
+
+#getRelationBtn {
+  background: linear-gradient(180deg, gray, black);
+  color: white;
+}
