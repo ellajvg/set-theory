@@ -1,4 +1,4 @@
-import {Component, input, model, output, signal} from '@angular/core';
+import {Component, input, model, output, signal, ViewChild} from '@angular/core';
 import {TableElement} from '../table-element.model';
 import {DivComponent} from '../../../shared/div/div.component';
 import {PropertiesComponent} from './properties/properties.component';
@@ -14,13 +14,11 @@ import {PropertiesComponent} from './properties/properties.component';
   styleUrl: './table.component.css'
 })
 export class TableComponent {
-  onSetRelation = input.required<boolean>();
-  product = input.required<string[]>();
-  tableData = model.required<TableElement[][]>();
   excluded = signal<string[]>([]);
-
-  updateOnSet = output<string>();
-  updateToSet = output<string>();
+  tableData = model.required<TableElement[][]>();
+  product = input.required<string[]>();
+  onSetRelation = input.required<boolean>();
+  @ViewChild(PropertiesComponent) propertiesComponent!: PropertiesComponent;
 
   onCheckboxChange($event: Event) {
     const checkbox = $event.target as HTMLInputElement;
@@ -31,7 +29,7 @@ export class TableComponent {
         if (element.id === checkboxId) {
           if (element.content === '+') {
             element.content = '-';
-            this.excluded().push(element.id);
+            this.excluded.set([...this.excluded(), element.id]);
           } else {
             element.content = '+';
             this.excluded.set(this.excluded().filter(id => id !== element.id));
@@ -39,5 +37,7 @@ export class TableComponent {
         }
       }
     }
+
+    this.propertiesComponent.updateSetProperties();
   }
 }

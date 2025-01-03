@@ -3,13 +3,13 @@
   <p class="instructions binIns">Separate set members by a comma. Whitespaces will be ignored.</p>
   <div id="input">
     <div class="set-entry">
-      <span>SET 1 = &#123;</span>
+      <span>SET X = &#123;</span>
       <input name="set1" [(ngModel)]="set1"/>
       <span>&#125;</span>
     </div>
     @if (selected() === 'toSet') {
       <div class="set-entry">
-        <span>SET 2 = &#123;</span>
+        <span>SET Y = &#123;</span>
         <input name="set2" [(ngModel)]="set2"/>
         <span>&#125;</span>
       </div>
@@ -23,5 +23,9 @@
   </div>
 </app-div>
 
-<app-table [onSetRelation]="selected() === 'onSet'" [product]="product()" [tableData]="tableData()"></app-table>
+<app-table
+  [onSetRelation]="selected() === 'onSet'"
+  [product]="product()"
+  [tableData]="tableData()"
+></app-table>
 

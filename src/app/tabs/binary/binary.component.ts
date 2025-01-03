@@ -52,7 +52,6 @@ export class BinaryComponent {
       }
     }
     this.product.set(product);
-    console.log(this.product());
   }
 
   getBinaryRelation() {
@@ -119,7 +118,6 @@ export class BinaryComponent {
       }
       tableData.push(row);
     }
-    console.log(tableData);
     return tableData;
   }
 }
