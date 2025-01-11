@@ -28,7 +28,6 @@ export class BasicsComponent {
   steps = signal<Step[]>([]);
 
   checkAndCorrectInput(inputEvent: Event): void {
-    console.log('hi1');
     const fullInput = inputEvent.target as HTMLInputElement;
     const validInputs = /^[A-Ca-c0∅()pP'~&*iI⋂|+⋃Uuv×\-–]*$/;
     let correctedInput = '';
@@ -70,7 +69,6 @@ export class BasicsComponent {
   }
 
   hasValidSyntax(formula: string | undefined): boolean {
-    console.log('hi2');
     //first check: no formula entered or single
     if (!formula) {
       this.errorMessage.set('Please enter a formula.');
@@ -143,7 +141,6 @@ export class BasicsComponent {
   }
 
   turnSetInputsToArrays(): void {
-    console.log('hi3');
     for (const set of this.sets()) {
       let content = set.setContent;
 
@@ -159,7 +156,6 @@ export class BasicsComponent {
   }
 
   onCalculate(): void {
-    console.log('hi4');
     this.sets.set(this.sets().slice(0,4)); //reset to array containing A-C
     this.steps.set([]);
     if (this.hasValidSyntax(this.formula())) {
@@ -198,7 +194,6 @@ export class BasicsComponent {
   }
 
   removeParentheses(formula: string[]):string[] {
-    console.log('hi5');
     if (!formula.includes('(')) {
       return this.calculate(formula);
     }
@@ -228,7 +223,6 @@ export class BasicsComponent {
   }
 
   calculate(formula: string[]):string[] {
-    console.log('hi6');
     const unaryOperations = /^['P]*$/
     for (let i = 0; i < formula.length; i++) {
       if (unaryOperations.test(formula[i])) {
@@ -239,7 +233,6 @@ export class BasicsComponent {
         const start = formula.slice(0, i);
         const toSolve = formula.slice(i, j+1);
         const end = formula.slice(j+1);
-        console.log("solve: " + toSolve)
         formula = [...start, ...this.unaryOperationHelper(toSolve), ...end];
         }
       }
@@ -275,7 +268,6 @@ export class BasicsComponent {
   }
 
   unaryOperationHelper(formula: string[]):string[] {
-    console.log('hi7');
     if (!formula.includes('P') || formula.length === 2) {
       let set = this.sets()
         .find(set => set.name === formula[formula.length-1])!.setContent as string[];
@@ -329,7 +321,6 @@ export class BasicsComponent {
   }
 
   powerSet(set: string[]) {
-    console.log('hi8');
     set = [...new Set([...set])];
     const powerSet: string[] = [];
     const powerSetSize = Math.pow(2, set.length);
@@ -348,7 +339,6 @@ export class BasicsComponent {
   }
 
   complement(set: string[]): string[] {
-    console.log('hi9');
     const universe = [...new Set([
       ...this.sets()[0].setContent,
       ...this.sets()[1].setContent,
@@ -358,7 +348,6 @@ export class BasicsComponent {
   }
 
   union(set1: string[], set2: string[]): string[] {
-    console.log('hi10');
     return [...new Set([
       ...set1,
       ...set2,
@@ -366,17 +355,14 @@ export class BasicsComponent {
   }
 
   intersection(set1: string[], set2: string[]): string[] {
-    console.log('hi11');
     return set1.filter(item => set2.includes(item));
   }
 
   difference(set1: string[], set2: string[]): string[] {
-    console.log('hi12');
     return set1.filter(item => !set2.includes(item));
   }
 
   cartesianProduct(set1: string[], set2: string[]):string[] {
-    console.log('hi13');
     const product: string[] = [];
     for (let i = 0; i < set1.length; i++) {
       for (let j = 0; j < set2.length; j++) {

@@ -56,5 +56,14 @@ table {
   font-weight: bold;
 }
 
+.italic {
+  font-style: italic;
+}
+
+@media (max-width: 400px) {
+  #checkboxes {
+    max-width: 22rem;
+  }
+}
 
 

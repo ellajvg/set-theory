@@ -1,4 +1,16 @@
 <div>
+  <a routerLink="calculator" routerLinkActive="selected">
+    SET THEORY CALCULATOR
+  </a>
+  <a routerLink="binary-relations" routerLinkActive="selected">
+    BINARY RELATIONS
+  </a>
+</div>
+
+<router-outlet/>
+
+<!--
+<div>
   <button
     (click)="showSelectedTab('basics')"
     [class.selected-tab]="selectedTab === 'basics'">
@@ -16,4 +28,4 @@
 } @else if (selectedTab === "binary") {
   <app-binary/>
 }
-
+-->

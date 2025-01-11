@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
-import {BasicsComponent} from './basics/basics.component';
-import {BinaryComponent} from './binary/binary.component';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
   standalone: true,
   imports: [
-    BasicsComponent,
-    BinaryComponent
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './tabs.component.html',
   styleUrl: './tabs.component.css'
 })
+
+export class TabsComponent {}
+
+/*
 export class TabsComponent {
   selectedTab = 'basics';
 
@@ -19,3 +23,4 @@ export class TabsComponent {
     this.selectedTab = tab;
   }
 }
+ */

@@ -1,6 +1,31 @@
 div {
   background: #c1c1c1;
   height: 3.5rem;
+  padding: 0;
+}
+
+a {
+  display: inline-block;
+  height: 2.1rem;
+  padding: 1.1rem 0.7rem 0.3rem;
+  font-size: 0.9rem;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  background: #c1c1c1;
+  cursor: pointer;
+  font-family: Roboto, sans-serif;
+}
+
+.selected {
+  background: #eee;
+  border-top-right-radius: 0.4rem;
+}
+
+/*
+div {
+  background: #c1c1c1;
+  height: 3.5rem;
 }
 
 button {
@@ -16,3 +41,4 @@ button.selected-tab {
   background: #eee;
   border-top-right-radius: 0.4rem;
 }
+ */

@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.4rem;
   min-width: 11rem;
-  min-height: 6rem;
+  min-height: 1rem;
 }
 
 #lastRow {
@@ -35,3 +35,4 @@ button:hover {
   background: linear-gradient(180deg, gray, black);
   color: white;
 }
+

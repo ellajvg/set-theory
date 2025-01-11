@@ -1,4 +1,4 @@
-import {Component, effect, input, signal} from '@angular/core';
+import {Component, effect, input, OnInit, signal} from '@angular/core';
 import {TableElement} from '../table-element.model';
 
 @Component({
@@ -16,8 +16,9 @@ export class PropertiesComponent {
   onSetRelation = input.required<boolean>();
 
   constructor() {
+
     effect(() => {
-      if (this.tableData().length > 0) {
+      if (this.tableData().length > 0 && this.excluded()) {
         if (this.onSetRelation()) {
           this.updateOnSetProperties()
         } else {
@@ -61,7 +62,6 @@ export class PropertiesComponent {
         }
       }
     }
-
 
     let asymmetric = !symmetric && irreflexive;
     let antisymmetric = !symmetric;

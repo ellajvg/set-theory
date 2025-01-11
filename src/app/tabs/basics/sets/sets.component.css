@@ -18,4 +18,8 @@ p {
   font-size: 0.9rem;
 }
 
-
+@media (max-width: 400px) {
+  input {
+    width: 3rem;
+  }
+}

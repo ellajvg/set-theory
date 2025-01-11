@@ -14,3 +14,7 @@ body {
   text-align: center;
   margin: 0 0 0.7rem;
 }
+
+button {
+  color: black;
+}

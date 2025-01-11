@@ -33,6 +33,7 @@ export class TableComponent {
             element.content = '+';
             this.excluded.set(this.excluded().filter(id => id !== element.id));
           }
+          break;
         }
       }
     }

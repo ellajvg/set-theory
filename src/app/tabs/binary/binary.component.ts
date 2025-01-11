@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {Component, signal, viewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {TableComponent} from './table/table.component';
@@ -11,7 +11,7 @@ import {DivComponent} from '../../shared/div/div.component';
   imports: [
     TableComponent,
     FormsModule,
-    DivComponent
+    DivComponent,
   ],
   templateUrl: './binary.component.html',
   styleUrl: './binary.component.css'
@@ -26,6 +26,8 @@ export class BinaryComponent {
   tableData = signal<TableElement[][]>([]);
   set1 = signal('');
   set2 = signal('');
+
+  tableComponent = viewChild(TableComponent);
 
   changeSelected() {
     if (this.selected() === 'onSet') {
@@ -68,6 +70,8 @@ export class BinaryComponent {
       this.tableData.set([]);
       return;
     }
+
+    this.tableComponent()?.excluded.set([]);
 
     const set1 = [...new Set(
       String(this.set1())
