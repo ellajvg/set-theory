@@ -1,5 +1,5 @@
-import {Component, effect, input, OnInit, signal} from '@angular/core';
-import {TableElement} from '../table-element.model';
+import {Component, effect, inject, signal} from '@angular/core';
+import {BinaryService} from '../../binary.service';
 
 @Component({
   selector: 'app-properties',
@@ -9,17 +9,13 @@ import {TableElement} from '../table-element.model';
   styleUrl: './properties.component.css'
 })
 export class PropertiesComponent {
+  binaryService = inject(BinaryService);
   properties = signal<boolean[]>([]);
-  tableData = input.required<TableElement[][]>();
-  excluded = input.required<string[]>();
-  product = input.required<string[]>();
-  onSetRelation = input.required<boolean>();
 
   constructor() {
-
     effect(() => {
-      if (this.tableData().length > 0 && this.excluded()) {
-        if (this.onSetRelation()) {
+      if (this.binaryService.tableData().length > 0 && this.binaryService.excluded()) {
+        if (this.binaryService.selected() == 'onSet') {
           this.updateOnSetProperties()
         } else {
           this.updateToSetProperties()
@@ -29,11 +25,11 @@ export class PropertiesComponent {
   }
 
   updateOnSetProperties() {
-    let currentElements = this.product().filter(
-      element => !this.excluded().includes(element));
+    let currentElements = this.binaryService.product().filter(
+      element => !this.binaryService.excluded().includes(element));
 
     let reflexive = true;
-    for (let element of this.excluded()) {
+    for (let element of this.binaryService.excluded()) {
       if (element.charAt(1) === element.charAt(4)) {
         reflexive = false;
         break;
@@ -54,7 +50,7 @@ export class PropertiesComponent {
         let x = element.charAt(1);
         let y = element.charAt(4);
         if (x !== y) {
-          for (let excl of this.excluded()) {
+          for (let excl of this.binaryService.excluded()) {
             if (x === excl.charAt(4) && y === excl.charAt(1)) {
               symmetric = false;
             }
@@ -128,8 +124,8 @@ export class PropertiesComponent {
 
   updateToSetProperties() {
     let leftTotal = true;
-    for (let i = 1; i < this.tableData().length; i++) {
-      let row = this.tableData()[i];
+    for (let i = 1; i < this.binaryService.tableData().length; i++) {
+      let row = this.binaryService.tableData()[i];
       let found = false;
       for (let i = 1; i < row.length; i++) {
         if (row[i].content === '+') {
@@ -144,11 +140,11 @@ export class PropertiesComponent {
     }
 
     let rightTotal = true;
-    for (let i =  1; i < this.tableData()[0].length; i++) {
+    for (let i =  1; i < this.binaryService.tableData()[0].length; i++) {
       let found = false;
 
-      for (let j = 1; j < this.tableData().length; j++) {
-        if (this.tableData()[j][i].content === '+') {
+      for (let j = 1; j < this.binaryService.tableData().length; j++) {
+        if (this.binaryService.tableData()[j][i].content === '+') {
           found = true;
           break;
         }
@@ -160,8 +156,8 @@ export class PropertiesComponent {
     }
 
     let leftMono = true;
-    for (let i = 1; i < this.tableData().length; i++) {
-      let row = this.tableData()[i];
+    for (let i = 1; i < this.binaryService.tableData().length; i++) {
+      let row = this.binaryService.tableData()[i];
       let plus = 0;
       for (let i = 1; i < row.length; i++) {
         if (row[i].content === '+') {
@@ -175,10 +171,10 @@ export class PropertiesComponent {
     }
 
     let rightMono = true;
-    for (let i =  1; i < this.tableData()[0].length; i++) {
+    for (let i =  1; i < this.binaryService.tableData()[0].length; i++) {
       let plus = 0;
-      for (let j = 1; j < this.tableData().length; j++) {
-        if (this.tableData()[j][i].content === '+') {
+      for (let j = 1; j < this.binaryService.tableData().length; j++) {
+        if (this.binaryService.tableData()[j][i].content === '+') {
           plus++;
         }
       }

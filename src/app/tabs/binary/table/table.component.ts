@@ -1,7 +1,7 @@
-import {Component, input, model, signal} from '@angular/core';
-import {TableElement} from './table-element.model';
+import {Component, inject} from '@angular/core';
 import {DivComponent} from '../../../shared/div/div.component';
 import {PropertiesComponent} from './properties/properties.component';
+import {BinaryService} from '../binary.service';
 
 @Component({
   selector: 'app-table',
@@ -14,24 +14,21 @@ import {PropertiesComponent} from './properties/properties.component';
   styleUrl: './table.component.css'
 })
 export class TableComponent {
-  excluded = signal<string[]>([]);
-  tableData = model.required<TableElement[][]>();
-  product = input.required<string[]>();
-  onSetRelation = input.required<boolean>();
+  binaryService = inject(BinaryService);
 
   onCheckboxChange($event: Event) {
     const checkbox = $event.target as HTMLInputElement;
     const checkboxId = checkbox.id;
 
-    for (let row of this.tableData()) {
+    for (let row of this.binaryService.tableData()) {
       for (let element of row) {
         if (element.id === checkboxId) {
           if (element.content === '+') {
             element.content = '-';
-            this.excluded.set([...this.excluded(), element.id]);
+            this.binaryService.excluded.set([...this.binaryService.excluded(), element.id]);
           } else {
             element.content = '+';
-            this.excluded.set(this.excluded().filter(id => id !== element.id));
+            this.binaryService.excluded.set(this.binaryService.excluded().filter(id => id !== element.id));
           }
           break;
         }

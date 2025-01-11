@@ -1,6 +1,6 @@
-@if (tableData().length !== 0) {
+@if (binaryService.tableData().length !== 0) {
   <div>
-    @if (onSetRelation()) {
+    @if (binaryService.selected() == 'onSet') {
       <p class="let">Let R be a binary relation on the set X.</p>
       <div class="property">
         <p class="header">REFLEXIVITY</p>

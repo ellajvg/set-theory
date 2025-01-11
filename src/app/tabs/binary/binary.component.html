@@ -7,7 +7,7 @@
       <input name="set1" [(ngModel)]="set1"/>
       <span>&#125;</span>
     </div>
-    @if (selected() === 'toSet') {
+    @if (binaryService.selected() === 'toSet') {
       <div class="set-entry">
         <span>SET Y = &#123;</span>
         <input name="set2" [(ngModel)]="set2"/>
@@ -23,9 +23,5 @@
   </div>
 </app-div>
 
-<app-table
-  [onSetRelation]="selected() === 'onSet'"
-  [product]="product()"
-  [tableData]="tableData()"
-></app-table>
+<app-table/>
 

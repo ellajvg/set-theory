@@ -17,9 +17,5 @@ export const routes: Routes = [
     loadComponent: (
     ) => import('./tabs/binary/binary.component').then(mod => mod.BinaryComponent),
     title: 'Binary relations'
-  },
-  {
-    path: '**',
-    redirectTo: 'calculator',
-  },
+  }
 ];

@@ -1,9 +1,9 @@
 <app-div>
   <p id="title">BINARY RELATION PROPERTIES</p>
-  @if (tableData().length !== 0) {
+  @if (binaryService.tableData().length !== 0) {
     <div id="relationResults">
       <div id="checkboxes">
-        @for (element of product(); track element) {
+        @for (element of binaryService.product(); track element) {
           <div id="checkbox">
             <input
               type="checkbox"
@@ -19,7 +19,7 @@
       <div id="tableContainer">
         <table>
           <tbody>
-            @for (row of tableData(); track row) {
+            @for (row of binaryService.tableData(); track row) {
               <tr>
                 @for (element of row; track element.id) {
                   @if (element.id.includes('⟨')) {
@@ -45,10 +45,5 @@
     </span>by Dr. Brendan Gillon.
   </p>
 
-  <app-properties
-    [tableData]="tableData()"
-    [excluded]="excluded()"
-    [product]="product()"
-    [onSetRelation]="onSetRelation()"
-  ></app-properties>
+  <app-properties/>
 </app-div>

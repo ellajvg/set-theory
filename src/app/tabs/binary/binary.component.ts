@@ -1,9 +1,10 @@
-import {Component, signal, viewChild} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {TableComponent} from './table/table.component';
 import {TableElement} from './table/table-element.model';
 import {DivComponent} from '../../shared/div/div.component';
+import {BinaryService} from './binary.service';
 
 @Component({
   selector: 'app-binary',
@@ -17,33 +18,28 @@ import {DivComponent} from '../../shared/div/div.component';
   styleUrl: './binary.component.css'
 })
 export class BinaryComponent {
-  selected = signal('onSet');
+  binaryService = inject(BinaryService);
   buttonText = signal('Binary relation from a set to a set');
   title = signal('BINARY RELATION ON A SET');
   errorMessage = signal('');
-
-  product = signal<string[]>([]);
-  tableData = signal<TableElement[][]>([]);
   set1 = signal('');
   set2 = signal('');
 
-  tableComponent = viewChild(TableComponent);
-
   changeSelected() {
-    if (this.selected() === 'onSet') {
-      this.selected.set('toSet');
+    if (this.binaryService.selected() === 'onSet') {
+      this.binaryService.selected.set('toSet');
       this.buttonText.set('Binary relation on a set');
       this.title.set('BINARY RELATION FROM A SET TO A SET');
     } else {
-      this.selected.set('onSet');
+      this.binaryService.selected.set('onSet');
       this.buttonText.set('Binary relation from a set to a set');
       this.title.set('BINARY RELATION ON A SET');
       this.set2.set('');
     }
 
     this.errorMessage.set('');
-    this.product.set([]);
-    this.tableData.set([]);
+    this.binaryService.product.set([]);
+    this.binaryService.tableData.set([]);
   }
 
   cartesianProduct(set1: string[], set2: string[]):void {
@@ -54,24 +50,24 @@ export class BinaryComponent {
         product.push(pair);
       }
     }
-    this.product.set(product);
+    this.binaryService.product.set(product);
   }
 
   getBinaryRelation() {
-    if (this.selected() === 'onSet' && this.set1().length === 0) {
+    if (this.binaryService.selected() === 'onSet' && this.set1().length === 0) {
       this.errorMessage.set('Please enter a set.');
-      this.product.set([]);
-      this.tableData.set([]);
+      this.binaryService.product.set([]);
+      this.binaryService.tableData.set([]);
       return;
-    } else if (this.selected() === 'toSet' &&
+    } else if (this.binaryService.selected() === 'toSet' &&
       (this.set1().length === 0 || this.set2().length === 0)) {
       this.errorMessage.set('Please enter a set in each field.');
-      this.product.set([]);
-      this.tableData.set([]);
+      this.binaryService.product.set([]);
+      this.binaryService.tableData.set([]);
       return;
     }
 
-    this.tableComponent()?.excluded.set([]);
+    this.binaryService.excluded.set([]);
 
     const set1 = [...new Set(
       String(this.set1())
@@ -81,7 +77,7 @@ export class BinaryComponent {
     )];
 
     let set2;
-    if (this.selected() === 'toSet') {
+    if (this.binaryService.selected() === 'toSet') {
       set2 = [...new Set(
         String(this.set2())
           .split(",")
@@ -92,10 +88,10 @@ export class BinaryComponent {
 
     if (set1 && set2) {
       this.cartesianProduct(set1, set2);
-      this.tableData.set(this.createTableData(set1, set2));
+      this.binaryService.tableData.set(this.createTableData(set1, set2));
     } else {
       this.cartesianProduct(set1, set1);
-      this.tableData.set(this.createTableData(set1, set1));
+      this.binaryService.tableData.set(this.createTableData(set1, set1));
     }
 
     this.errorMessage.set('');
@@ -118,7 +114,7 @@ export class BinaryComponent {
       iLabel++;
       let row = [{content: element, id: `${iLabel}`}];
       for (let {} of set2) {
-        row.push({content: '+', id: this.product()[iProduct]});
+        row.push({content: '+', id: this.binaryService.product()[iProduct]});
         iProduct++;
       }
       tableData.push(row);
