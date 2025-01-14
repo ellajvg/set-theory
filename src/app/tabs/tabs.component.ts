@@ -14,13 +14,3 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 })
 
 export class TabsComponent {}
-
-/*
-export class TabsComponent {
-  selectedTab = 'basics';
-
-  showSelectedTab(tab: string): void {
-    this.selectedTab = tab;
-  }
-}
- */
