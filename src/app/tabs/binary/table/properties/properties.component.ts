@@ -44,16 +44,14 @@ export class PropertiesComponent {
       }
     }
 
-    let symmetric = reflexive;
-    if (symmetric) {
-      for (let element of currentElements) {
-        let x = element.charAt(1);
-        let y = element.charAt(4);
-        if (x !== y) {
-          for (let excl of this.binaryService.excluded()) {
-            if (x === excl.charAt(4) && y === excl.charAt(1)) {
-              symmetric = false;
-            }
+    let symmetric = true;
+    for (let element of currentElements) {
+      let x = element.charAt(1);
+      let y = element.charAt(4);
+      if (x !== y) {
+        for (let excl of this.binaryService.excluded()) {
+          if (x === excl.charAt(4) && y === excl.charAt(1)) {
+            symmetric = false;
           }
         }
       }
