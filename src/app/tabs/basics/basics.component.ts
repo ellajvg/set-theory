@@ -26,6 +26,7 @@ export class BasicsComponent {
     { name: '∅', setContent: [] }
   ]);
   steps = signal<Step[]>([]);
+  stepId = 1;
 
   checkAndCorrectInput(inputEvent: Event): void {
     const fullInput = inputEvent.target as HTMLInputElement;
@@ -105,9 +106,8 @@ export class BasicsComponent {
       this.errorMessage.set(`${formula.charAt(0) + formula.charAt(1)} is not a valid sequence.`);
       return false;
     } else {
-      let prev = formula.charAt(2);
-
-      for (let i = 3; i < formula.length; i++) {
+      let prev = formula.charAt(0);
+      for (let i = 1; i < formula.length; i++) {
         if (sets.test(formula.charAt(i)) &&
           (sets.test(prev) || prev === ')')) {
           this.errorMessage.set(`${prev + formula.charAt(i)} is not a valid sequence.`);
@@ -165,7 +165,7 @@ export class BasicsComponent {
       if (this.formula()!.includes('(')) {
         parentheses = true;
         this.steps().push({
-          id: this.steps().length,
+          id: -1,
           step: 'Calculate expressions within parentheses in: ' + formulaArray.join(''),
           class: 'header'
         });
@@ -179,14 +179,14 @@ export class BasicsComponent {
           step = 'Calculate expressions in: ';
         }
         this.steps().push({
-          id: this.steps().length,
+          id: -2,
           step: step + formulaArray.join(''),
           class: 'header'
         });
       }
       const result = this.calculate(formulaArray);
       this.steps().push({
-        id: this.steps().length,
+        id: -3,
         step: 'The resulting set is: ' + result.join(''),
         class: 'result'
       });
@@ -259,9 +259,10 @@ export class BasicsComponent {
 
         this.sets().push({name: newName, setContent: set1});
         this.steps().push({
-          id: this.steps().length,
+          id: this.stepId,
           step: start.join('') + " = " + newName
         });
+        this.stepId++;
         formula = [newName, ...end];
       }
     return formula;
@@ -278,16 +279,18 @@ export class BasicsComponent {
           this.sets().push({name: newName, setContent: newSet});
 
           this.steps().push({
-            id: this.steps().length,
+            id: this.stepId,
             step: formula.join('') + " = " + newName
           });
+          this.stepId++;
 
           return [newName];
         } else {
           this.steps().push({
-            id: this.steps().length,
+            id: this.stepId,
             step: formula.join('') + " = " + formula[formula.length-1]
           });
+          this.stepId++;
           return [formula[formula.length-1]];
         }
       } else {
@@ -296,9 +299,10 @@ export class BasicsComponent {
         this.sets().push({name: newName, setContent: newSet});
 
         this.steps().push({
-          id: this.steps().length,
+          id: this.stepId,
           step: formula.join('') + " = " + newName
         });
+        this.stepId++;
 
         return [newName];
       }
