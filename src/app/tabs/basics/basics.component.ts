@@ -158,6 +158,7 @@ export class BasicsComponent {
   onCalculate(): void {
     this.sets.set(this.sets().slice(0,4)); //reset to array containing A-C
     this.steps.set([]);
+    this.stepId = 1;
     if (this.hasValidSyntax(this.formula())) {
       this.turnSetInputsToArrays();
       let formulaArray = this.formula()!.split('').filter(char => char !== ' ');
