@@ -18,6 +18,20 @@ p {
   font-size: 0.9rem;
 }
 
+#cardinality {
+  position: absolute;
+  background: #d6d4d4;
+  border-radius: 0.2rem;
+  box-shadow: 1px 2px 3px gray;
+  padding: 0.2rem 0.5rem;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+#cardinality p {
+  margin: 0;
+}
+
 @media (max-width: 400px) {
   input {
     width: 3rem;

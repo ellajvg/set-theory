@@ -5,7 +5,7 @@ import {ButtonsComponent} from './buttons/buttons.component';
 import {SetsComponent} from './sets/sets.component';
 import {StepsComponent} from './steps/steps.component';
 
-import {type Set} from './sets/set.model';
+import {type SetModel} from './sets/set.model';
 import {type Step} from './steps/step.model';
 import {DivComponent} from '../../shared/div/div.component';
 
@@ -19,7 +19,7 @@ import {DivComponent} from '../../shared/div/div.component';
 export class BasicsComponent {
   formula = signal<string | ''>('');
   errorMessage = signal<string | ''> ('');
-  sets=  signal<Set[]>([
+  sets=  signal<SetModel[]>([
     { name: 'A', setContent: [] },
     { name: 'B', setContent: [] },
     { name: 'C', setContent: [] },

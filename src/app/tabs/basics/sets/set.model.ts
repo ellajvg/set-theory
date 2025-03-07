@@ -1,4 +1,4 @@
-export interface Set {
+export interface SetModel {
   name: string,
   setContent: string | string[]
 }

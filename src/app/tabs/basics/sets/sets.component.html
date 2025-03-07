@@ -1,9 +1,9 @@
 <div>
   <form>
     @for (set of sets().slice(0, 3); track set.name) {
-      <div id="set">
+      <div id="set" (mouseenter)="getCardinality($event, set)" (mouseleave)="hideCardinality()">
         <span>{{ "SET " + set.name + " = {" }}</span>
-        <input [name]="set.name" [(ngModel)]="set.setContent"/>
+        <input [name]="set.name" [(ngModel)]="set.setContent" (click)="hideCardinality()"/>
         <span>&#125;</span>
       </div>
     }
@@ -11,3 +11,9 @@
 
   <p>Separate set members by a comma. Whitespaces will be ignored.</p>
 </div>
+
+@if (cardinalityVisible()) {
+  <div id="cardinality" [style.top.px]="positionY()" [style.left.px]="positionX()">
+    <p>{{ cardinality()  }}</p>
+  </div>
+}
