@@ -3,7 +3,7 @@
     @for (set of sets().slice(0, 3); track set.name) {
       <div id="set" (mouseenter)="getCardinality($event, set)" (mouseleave)="hideCardinality()">
         <span>{{ "SET " + set.name + " = {" }}</span>
-        <input [name]="set.name" [(ngModel)]="set.setContent" (click)="hideCardinality()"/>
+        <input [name]="set.name" [(ngModel)]="set.setContent" (click)="hideCardinality()" (input)="hideCardinality()"/>
         <span>&#125;</span>
       </div>
     }
