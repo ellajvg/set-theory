@@ -28,8 +28,6 @@ export class PropertiesComponent {
     let currentElements = this.binaryService.product().filter(
       element => !this.binaryService.excluded().includes(element));
 
-
-    //split by commaa, revmove outside brakcet, then see if match
     let reflexive = true;
     for (let element of this.binaryService.excluded()) {
       element = element.slice(1, -1)
