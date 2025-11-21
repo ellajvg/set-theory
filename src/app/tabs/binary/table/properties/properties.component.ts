@@ -28,9 +28,13 @@ export class PropertiesComponent {
     let currentElements = this.binaryService.product().filter(
       element => !this.binaryService.excluded().includes(element));
 
+
+    //split by commaa, revmove outside brakcet, then see if match
     let reflexive = true;
     for (let element of this.binaryService.excluded()) {
-      if (element.charAt(1) === element.charAt(4)) {
+      element = element.slice(1, -1)
+      let elements = element.split(', ')
+      if (elements[0] === elements[1]) {
         reflexive = false;
         break;
       }
@@ -38,7 +42,9 @@ export class PropertiesComponent {
 
     let irreflexive = true;
     for (let element of currentElements) {
-      if (element.charAt(1) === element.charAt(4)) {
+      element = element.slice(1, -1)
+      let elements = element.split(', ')
+      if (elements[0] === elements[1]) {
         irreflexive = false;
         break;
       }
@@ -46,11 +52,15 @@ export class PropertiesComponent {
 
     let symmetric = true;
     for (let element of currentElements) {
-      let x = element.charAt(1);
-      let y = element.charAt(4);
+      element = element.slice(1, -1)
+      let elements = element.split(', ')
+      let x = elements[0];
+      let y = elements[1];
       if (x !== y) {
         for (let excl of this.binaryService.excluded()) {
-          if (x === excl.charAt(4) && y === excl.charAt(1)) {
+          excl = excl.slice(1, -1)
+          let excls = excl.split(', ')
+          if (x === excls[1] && y === excls[0]) {
             symmetric = false;
           }
         }
@@ -61,11 +71,15 @@ export class PropertiesComponent {
     let antisymmetric = !symmetric;
     if (asymmetric || antisymmetric) {
       for (let element of currentElements) {
-        let x = element.charAt(1);
-        let y = element.charAt(4);
+        element = element.slice(1, -1)
+        let elements = element.split(', ')
+        let x = elements[0];
+        let y = elements[1];
         if (x !== y) {
           for (let excl of currentElements) {
-            if (x === excl.charAt(4) && y === excl.charAt(1)) {
+            excl = excl.slice(1, -1)
+            let excls = excl.split(', ')
+            if (x === excls[1] && y === excls[0]) {
               asymmetric = false;
               antisymmetric = false;
             }
@@ -76,11 +90,15 @@ export class PropertiesComponent {
 
     let transitive = true;
     for (let e1 of currentElements) {
-      let x = e1.charAt(1);
-      let y = e1.charAt(4);
+      e1 = e1.slice(1, -1)
+      let e1s = e1.split(', ')
+      let x = e1s[0];
+      let y = e1s[1];
       for (let e2 of currentElements) {
-        if (y === e2.charAt(1)) {
-          let z = e2.charAt(4);
+        e2 = e2.slice(1, -1)
+        let e2s = e2.split(', ')
+        if (y === e2s[0]) {
+          let z = e2s[1];
           if (!(currentElements.includes('⟨' + x + ', ' + z + '⟩'))) {
             transitive = false;
             break;
@@ -94,11 +112,15 @@ export class PropertiesComponent {
 
     let intransitive = true;
     for (let e1 of currentElements) {
-      let x = e1.charAt(1);
-      let y = e1.charAt(4);
+      e1 = e1.slice(1, -1)
+      let e1s = e1.split(', ')
+      let x = e1s[0];
+      let y = e1s[1];
       for (let e2 of currentElements) {
-        if (y === e2.charAt(1)) {
-          let z = e2.charAt(4);
+        e2 = e2.slice(1, -1)
+        let e2s = e2.split(', ')
+        if (y === e2s[0]) {
+          let z = e2s[1];
           if (currentElements.includes('⟨' + x + ', ' + z + '⟩')) {
             intransitive = false;
             break;
